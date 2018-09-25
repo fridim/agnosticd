@@ -93,7 +93,7 @@ pipeline {
                     ).trim()
 
 
-                    def m = email =~ /To get started, please login with your OPENTLC credentials to: ([^ ]+) in your web browser/
+                    def m = email =~ /you can login to the master node with your OPENTLC credentials by GUI or using oc. You can find the master's console here: ([^ ]+)/
                     openshift_location = m[0][1]
                 }
             }
