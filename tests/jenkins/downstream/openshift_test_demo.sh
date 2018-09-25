@@ -36,7 +36,7 @@ assert_FAIL() {
   fi
 }
 
-$OC login ${OPENSHIFT_LOCATION} --username="${username}" --password="${password}"
+$OC login ${openshift_location} --username="${username}" --password="${password}"
 
 projects=$($OC get projects -o json|jq -r '.items[].metadata.name'|grep ${guid})
 
