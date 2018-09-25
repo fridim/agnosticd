@@ -77,8 +77,8 @@ pipeline {
                 credentials=credentials("${imap_creds}")
             }
             steps {
-                git url: 'https://github.com/sborenst/ansible_agnostic_deployer',
-                    branch: 'development'
+                git url: 'https://github.com/fridim/ansible_agnostic_deployer',
+                    branch: 'iot-demo-integration-tests'
 
                 script {
                     email = sh(
