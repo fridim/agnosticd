@@ -1,5 +1,6 @@
 ---
 - name: install at package
+  tags: packer
   yum:
     name: at
 

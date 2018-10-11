@@ -4,6 +4,7 @@
   yum:
     name: "docker-{{ docker_version }}"
     state: present
+  tags: packer
 
 - name: Lock docker version
   command: yum versionlock add "docker*"

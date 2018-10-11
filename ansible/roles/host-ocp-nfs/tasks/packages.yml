@@ -4,6 +4,7 @@
   yum:
     name: "{{ item }}"
     state: present
+  tags: packer
   with_items:
     - lvm2
     - bind-utils

@@ -6,14 +6,17 @@
     yum:
       name: cri-o-1.9.12
       state: present
+    tags: packer
 
   - name: Install yum versionlock (Before 3.10)
     yum:
       name: yum-plugin-versionlock
       state: present
+    tags: packer
 
   - name: Lock cri-o version (Before 3.10)
     command: "yum versionlock cri-o*"
+    tags: packer
   when: osrelease is version_compare('3.10', '<')
 
 # The next is for a workaround for bugs

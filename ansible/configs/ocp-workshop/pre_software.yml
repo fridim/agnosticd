@@ -42,6 +42,7 @@
   tags:
     - step004
     - common_tasks
+    - packer
   pre_tasks:
     - name: add rhel-7-server-ansible-2.4-rpms repo for OCP 3.9 and 3.10
       set_fact:

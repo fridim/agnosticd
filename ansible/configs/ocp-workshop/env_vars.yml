@@ -15,9 +15,9 @@
 ###### OR PASS as "-e" args to ansible-playbook command
 
 ### Common Host settings
-repo_version: "3.10"
 repo_method: file # Other Options are: file, satellite and rhn
 osrelease: 3.10.34
+repo_version: "{{ osrelease | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2')  }}"
 
 ### Authentication for Red Hat Registry (registry.redhat.io), needs to be a user that can log into
 ### the customer portal. Not required before 3.11...
@@ -366,6 +366,7 @@ instances:
     unique: true
     public_dns: true
     dns_loadbalancer: true
+    image_id: RHEL75PACKER
     flavor:
       ec2: "{{bastion_instance_type}}"
       azure: "{{bastion_instance_type}}"
@@ -380,6 +381,7 @@ instances:
     count: "{{master_instance_count}}"
     public_dns: true
     dns_loadbalancer: true
+    image_id: RHEL75PACKER
     flavor:
       ec2: "{{master_instance_type}}"
       azure: "{{master_instance_type}}"
@@ -399,6 +401,7 @@ instances:
   - name: "node"
     count: "{{node_instance_count}}"
     public_dns: false
+    image_id: RHEL75PACKER
     dns_loadbalancer: false
     flavor:
       ec2: "{{node_instance_type}}"
@@ -418,6 +421,7 @@ instances:
 
   - name: "infranode"
     count: "{{infranode_instance_count}}"
+    image_id: RHEL75PACKER
     public_dns: true
     dns_loadbalancer: true
     flavor:
@@ -440,6 +444,7 @@ instances:
     count: "{{support_instance_count}}"
     public_dns: false
     dns_loadbalancer: false
+    image_id: RHEL75PACKER
     flavor:
       ec2: "{{support_instance_type}}"
       azure: "{{support_instance_type}}"

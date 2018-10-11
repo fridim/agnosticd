@@ -13,3 +13,4 @@
   #any_errors_fatal: true
   tags:
     - install_common_packages
+    - packer

@@ -2,6 +2,7 @@
 - name: Install packages
   yum:
     name: "{{ item }}"
+  tags: packer
   with_items:
     - git
     - python-boto

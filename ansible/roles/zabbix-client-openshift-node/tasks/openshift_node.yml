@@ -1,6 +1,7 @@
 # vim: set ft=ansible:
 ---
 - name: Create userParamater for openshift_node.requests[]
+  tags: packer
   copy:
     dest: /etc/zabbix/zabbix_agentd.d/requests.conf
     content: |
@@ -8,6 +9,7 @@
   notify: restart zabbix agent
 
 - name: install bc
+  tags: packer
   yum:
     name: bc
 

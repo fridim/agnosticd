@@ -51,6 +51,7 @@
 - name: Install python2-winrm and python-requests
   ignore_errors: yes
   become: true
+  tags: packer
   yum:
     name: "{{ item }}"
   with_items:
