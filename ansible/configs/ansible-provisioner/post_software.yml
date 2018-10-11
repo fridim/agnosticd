@@ -39,6 +39,7 @@
       no_log: yes
 
     - name: Install vim
+      tags: packer
       yum:
         name: vim
 
@@ -180,6 +181,7 @@
       yum:
         name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/m/mosh-1.3.0-1.el7.x86_64.rpm
       ignore_errors: yes
+      tags: packer
 
     - copy:
         dest: /etc/yum.repos.d/azure-cli.repo
@@ -192,6 +194,7 @@
           gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 
     - name: Install azure-cli
+      tags: packer
       yum:
         name: azure-cli
 
@@ -200,6 +203,7 @@
         name: ansible[azure]
 
     - name: install httpd
+      tags: packer
       yum:
         name: "{{ item }}"
       with_items:

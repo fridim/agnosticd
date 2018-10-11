@@ -1,0 +1,12 @@
+[nodes]
+default
+[masters]
+default
+[bastion]
+default
+[infranodes]
+default
+[support]
+default
+[nfs]
+default
