@@ -1,0 +1,33 @@
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key_id`}}",
+            "secret_key": "{{user `aws_secret_access_key`}}",
+            "region": "us-east-1",
+            "source_ami": "ami-0456c465f72bd0c95",
+            "ami_regions": "us-east-1",
+            "instance_type": "t2.large",
+            "ssh_username": "ec2-user",
+            "ami_name": "packer updated RHEL 7.5 ocp-workshop {{user `osrelease`}} {{timestamp}}"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "./../../main.yml",
+            "user": "ec2-user",
+            "extra_arguments": [
+                "--extra-vars", "ANSIBLE_REPO_PATH={{user `ANSIBLE_REPO_PATH`}}",
+                "--extra-vars", "own_repo_path={{user `own_repo_path`}}",
+                "--extra-vars", "env_type=ocp-workshop",
+                "--extra-vars", "cloud_provider=ec2",
+                "--extra-vars", "software_to_deploy=openshift",
+                "--extra-vars", "osrelease={{user `osrelease`}}",
+                "--tags", "packer"
+            ],
+            "ansible_env_vars": ["ANSIBLE_HOST_KEY_CHECKING=False"]
+        }
+    ]
+}
