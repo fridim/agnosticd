@@ -21,10 +21,8 @@
             "extra_arguments": [
                 "--extra-vars", "ANSIBLE_REPO_PATH={{user `ANSIBLE_REPO_PATH`}}",
                 "--extra-vars", "own_repo_path={{user `own_repo_path`}}",
-                "--extra-vars", "env_type=ocp-workshop",
-                "--extra-vars", "cloud_provider=ec2",
-                "--extra-vars", "software_to_deploy=openshift",
                 "--extra-vars", "osrelease={{user `osrelease`}}",
+                "--extra-vars", "@packer_image.yml",
                 "--tags", "packer",
                 "-i", "hosts_packer"
             ],
