@@ -6,6 +6,7 @@
     - httpd
   tags:
     - install_httpd_packages
+    - packer
 
 - name: create reverse proxy file on httpd /etc/httpd/conf.d
   template:

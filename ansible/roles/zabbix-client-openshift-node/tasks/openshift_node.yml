@@ -23,11 +23,13 @@
     mode: 0600
 
 - name: create /opt/monitoring
+  tags: packer
   file:
     path: /opt/monitoring
     state: directory
 
 - name: create requests.sh
+  tags: packer
   copy:
     dest: /opt/monitoring/requests.sh
     src: files/requests.sh

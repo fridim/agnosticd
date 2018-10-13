@@ -1,6 +1,7 @@
 # vim: set ft=ansible:
 ---
 - name: Configure Docker
+  tags: packer
   yum:
     name: "docker-{{ docker_version }}"
     state: present

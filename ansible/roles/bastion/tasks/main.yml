@@ -71,6 +71,7 @@
 
 - name: Install mosh
   become: true
+  tags: packer
   yum:
     name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/m/mosh-1.3.0-1.el7.x86_64.rpm
   ignore_errors: yes

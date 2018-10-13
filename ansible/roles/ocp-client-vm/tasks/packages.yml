@@ -18,6 +18,7 @@
   - podman
   tags:
   - install_openshift_client_vm_packages
+  - packer
 
 
 - name: Get recent version of maven

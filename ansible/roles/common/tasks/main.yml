@@ -9,6 +9,7 @@
     name: '*'
     state: latest
   when: update_packages|bool
+  tags: packer
 
 ######################## Install Basic Packages
 - name: Install Basic Packages

@@ -1,4 +1,5 @@
 - name: Install required packages 
+  tags: packer
   yum: 
      name: "{{item}}"
      state: latest 
@@ -8,6 +9,7 @@
     - python-devel 
     - gcc
 - name: Install tower-cli
+  tags: packer
   pip:
     name: ansible-tower-cli
     state: latest

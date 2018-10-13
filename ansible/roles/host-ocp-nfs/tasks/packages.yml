@@ -4,10 +4,10 @@
   yum:
     name: "{{ item }}"
     state: present
-  tags: packer
   with_items:
     - lvm2
     - bind-utils
     - nfs-utils
   tags:
    - install_nfs_packages
+   - packer

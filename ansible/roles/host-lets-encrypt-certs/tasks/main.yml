@@ -72,6 +72,7 @@
         - not cache_archive_file.stat.exists|bool or acme_force_issue|d(False)|bool
       block:
       - name: Ensure git is installed
+        tags: packer
         yum:
           name: git
           state: latest
