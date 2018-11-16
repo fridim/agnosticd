@@ -47,7 +47,7 @@ pipeline {
                         script: '''
                           ./opentlc/order_svc_guid.sh \
                           -c "OpenShift Demos" \
-                          -i "OpenShift 3.9 Shared Demo Environment" \
+                          -i "OpenShift 3.11 Shared Environment (TEST)" \
                           -d "check=t,quotacheck=t"
                         '''
                     ).trim()
