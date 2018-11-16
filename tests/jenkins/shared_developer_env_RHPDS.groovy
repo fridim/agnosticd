@@ -48,7 +48,7 @@ pipeline {
                           ./opentlc/order_svc_guid.sh \
                           -c "OpenShift Demos" \
                           -i "OpenShift 3.11 Shared Environment (TEST)" \
-                          -d "check=t,quotacheck=t"
+                          -d "check=t,quotacheck=t,runtime=8,expiration=7"
                         '''
                     ).trim()
 
