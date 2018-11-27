@@ -18,7 +18,7 @@
 
 repo_method: file # Other Options are: file, satellite and rhn
 
-
+install_ipa_client: false
 # Do you want to run a full yum update
 update_packages: false
 #If using repo_method: satellite, you must set these values as well.
@@ -35,11 +35,12 @@ project_tag: "{{ env_type }}-{{ guid }}"
 
 # This is where the ssh_config file will be created, this file is used to
 # define the communication method to all the hosts in the deployment
-deploy_local_ssh_config_location: "{{ANSIBLE_REPO_PATH}}/workdir"
+deploy_local_ssh_config_location: "{{output_dir}}/"
 
 install_bastion: true
 install_common: true
-software_to_deploy: none
+## SB Don't set software_to_deploy from here, always use extra vars (-e) or "none" will be used
+#software_to_deploy:: none
 
 repo_version: "3.6"
 
@@ -54,7 +55,7 @@ set_env_authorized_key: true
 
 # Is this running from Red Hat Ansible Tower
 tower_run: false
-### Azure 
+### Azure
 
 # Create a dedicated resourceGroup for this deployment
 az_destroy_method: resource_group
@@ -112,7 +113,7 @@ instances:
       - key: "ostype"
         value: "linux"
       - key: "instance_filter"
-        value: "{{ env_type }}-{{ email }}" 
+        value: "{{ env_type }}-{{ email }}"
     rootfs_size: "{{ rootfs_size_bastion }}"
 
   - name: "frontend"
@@ -160,7 +161,7 @@ instances:
       - key: "ostype"
         value: "rhel"
       - key: "instance_filter"
-        value: "{{ env_type }}-{{ email }}" 
+        value: "{{ env_type }}-{{ email }}"
     key_name: "{{key_name}}"
 
   - name: "support"

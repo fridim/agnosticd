@@ -2,8 +2,6 @@
   hosts: support
   gather_facts: False
   become: yes
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
   tasks:
     - debug:
         msg: "Post-Software tasks Started"
@@ -12,23 +10,20 @@
   hosts:
     - windows[0]
   gather_facts: False
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_secret_vars.yml"
   tags:
     - step004
     - common_tasks
     - windows_tasks
   roles:
-    - { role: "{{ ANSIBLE_REPO_PATH }}/roles/windows-ad", when: install_win_ad | bool }
+    - { role: "windows-ad", when: hostvars.localhost.install_win_ad | bool }
   tasks:
     - name: Reboot upon promotion
       win_reboot:
-      when: install_win_ad | bool
+      when: hostvars.localhost.install_win_ad | bool
 
     - name: Wait for connection
       wait_for_connection:
-      when: install_win_ad | bool
+      when: hostvars.localhost.install_win_ad | bool
 
 - name: Step lab post software deployment
   hosts: bastions
@@ -36,60 +31,58 @@
   become: yes
   tags:
     - opentlc_bastion_tasks
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
   tasks:
     - import_role:
-        name: "{{ ANSIBLE_REPO_PATH }}/roles/bastion-opentlc-ipa"
+        name: bastion-opentlc-ipa
       when: install_ipa_client|bool
     - import_role:
-        name: "{{ ANSIBLE_REPO_PATH }}/roles/ansible-version-lock"
+        name: ansible-version-lock
 
     - name: Copy Tower License File
       copy:
-        src: "~/secrets/ans-tower-lab_license.txt"
+        content: "{{ tower_license | from_json }}"
         dest: /root/license.txt
+  
+  
+    - name: Copy Openstack PEM key
+      blockinfile:
+        path: /root/.ssh/openstack.pem
+        block: |
+          {{ openstack_pem | b64decode }}
+        owner: root
+        group: root
+        mode: 0400
+        state: present
+        create: yes
 
-    - name: Copy Openstack PEM key
-      copy:
-        src: "~/secrets/ans-tower-lab_openstack.pem"
-        dest: /root/.ssh/openstack.pem
+    - name: Copy Openstack Pub key
+      blockinfile:
+        path: /root/.ssh/openstack.pub
+        block: |
+          {{ openstack_pub | b64decode }}
         owner: root
         group: root
         mode: 0400
-    - name: Copy Openstack PEM key
-      copy:
-        src: "~/secrets/ans-tower-lab_openstack.pub"
-        dest: /root/.ssh/openstack.pub
-        owner: root
-        group: root
-        mode: 0400
+        state: present
+        create: yes
 
 - name: Post Tower configs
   hosts: towers[0]
   become: yes
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
   roles:
-    - { role: "{{ ANSIBLE_REPO_PATH }}/roles/tower_demo", when: deploy_tower_demo | d(false) | bool }
+    - { role: "tower_demo", when: hostvars.localhost.deploy_tower_demo | d(false) | bool }
 
 - name: Install Tower For Homework
   hosts: bastions
   become: yes
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_secret_vars.yml"
   roles:
-    - { role: "{{ ANSIBLE_REPO_PATH }}/roles/install-tower", when: deploy_tower_homework | d(false) | bool }
+    - { role: "install-tower", when: hostvars.localhost.deploy_tower_homework | d(false) | bool }
 
 - name: PostSoftware flight-check
   hosts: localhost
   connection: local
   gather_facts: false
   become: false
-  vars_files:
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_vars.yml"
-    - "{{ ANSIBLE_REPO_PATH }}/configs/{{ env_type }}/env_secret_vars.yml"
   tags:
     - post_flight_check
   tasks:

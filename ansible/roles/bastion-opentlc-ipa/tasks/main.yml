@@ -4,6 +4,7 @@
 
 ######################### Setting up environment for post deployment administration
 
+- debug: var=hostvars.localhost.skip_packer_tasks
 - name: install ipa client packages
   yum:
     name: "ipa-client"
@@ -82,7 +83,7 @@
 - name: Fetch the ipa-client-logs archive
   fetch:
     src: /tmp/ipa-client-logs.tar.gz
-    dest: "{{ANSIBLE_REPO_PATH}}/workdir/{{project_tag}}_ipa-client-logs.tar.gz"
+    dest: "{{output_dir}}/{{project_tag}}_ipa-client-logs.tar.gz"
     flat: true
   ignore_errors: yes
 
