@@ -203,7 +203,7 @@ az_2_name: "{{ aws_region }}b"
 instances:
   - name: "clientvm"
     count: "{{num_users}}"
-    unique: yes
+    unique: "{{ true if num_users | int <= 1 else false }}"
     public_dns: true
     alt_name: bastion
     flavor:
