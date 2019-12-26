@@ -1,3 +1,4 @@
+name: Generate Git history graphs
 on: [push]
 
 jobs:
